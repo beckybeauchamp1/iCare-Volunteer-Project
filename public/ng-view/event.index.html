@@ -1,34 +1,101 @@
-<input type="text" class="form-control" placeholder="Filter on..." data-ng-model="vm.filter_on" />
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <td data-ng-click="vm.is_descending = !(vm.is_descending)">
-        <span data-ng-if="vm.is_descending">z-a</span>
-        <span data-ng-if="!vm.is_descending">a-z</span>
-      </td>
-      <th data-ng-click="vm.sort_data_by('title')">Title</th>
-      <th data-ng-click="vm.sort_data_by('organizer')">Organizer</th>
-      <th data-ng-click="vm.sort_data_by('focus_area')">Category</th>
-      <th data-ng-click="vm.sort_data_by('start_date')">Start Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr data-ng-repeat="event in vm.events | filter: vm.filter_on | orderBy: vm.sort_on : vm.is_descending">
-      <td>{{$index + 1}}</td>
-      <td colspan="2">
-        <input type="text" data-ng-model="event.title" placeholder="Name" />
-      </td>
-      <td>
-        <input type="text" data-ng-model="event.organizer" placeholder="Organizer" />
-      </td>
-      <td>
-        <input type="text" data-ng-model="event.category" placeholder="Category" />
-      </td>
-      <td>
-        <input type="date" data-ng-model="event.country" placeholder="mm/dd/yyyy" />
-      </td>
-      <td data-ng-click="vm.create()">&plus;</td>
-    </tr>
-  </tbody>
-</table>
+<!DOCTYPE html >
+<html>
+<!--Your title needs to actually be instead your head tags for all of the metadata-->
+<head></head>
+  <title></title>
+  <!--Once again, it's generally discourged to put your css inside your html files -->
+  <style>
+
+  body {
+    background-image: url(//i.imgur.com/ENvDzQX.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    text-align: center;
+  }
+
+  .intro-section {
+    padding-top: 80px;
+  }
+
+  h1 {
+    color: white;
+    font-family: "Raleway", sans-serif;
+    font-size: 30pt;
+    font-weight: bold;
+    padding-top: 250px;
+  }
+
+  #home-p {
+    color: white;
+    font-family: "Quicksand", sans-serif;
+    font-size: 30px;
+  }
+
+  p {
+    font-family: "Quicksand", sans-serif;
+    color: white;
+    font-size: 25px;
+    /*padding-top: 20px;*/
+  }
+
+  .btn-block {
+    display: block;
+    width: 200px;
+  }
+
+  .btn-primary {
+    color: #fff;
+    border: 1px solid #fff;
+    background-color: transparent;
+  }
+
+  .btn-primary:active {
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: #099C38;
+
+  .btn {
+    text-align: center;
+    vertical-align: middle;
+    margin: 0px auto;
+    position: absolute;
+    justify-content: center;
+  }
+
+  </style>
+
+
+  <body>
+    <div class="intro-section">
+      <h1> WHAT DO YOU CARE ABOUT?</h1>
+      <p id= "home-p"> iCare about...</p>
+        <form>
+
+      <select data-ng-model="events" data-ng-options="event.focus_area" >
+        <option value="">
+        <option value="All">All
+        <option value="Advocacy & Human Rights">Advocacy & Human Rights
+        <option value="Animals">Animals
+        <option value="Arts & Culture">Arts & Culture
+        <option value="Children & Youth">Children & Youth
+        <option value="Community Development">Community Development
+        <option value="Economic Development">Economic Development
+        <option value="Education & Literacy">Education & Literacy
+        <option value="Environment & Sustainability">Environment & Sustainability
+        <option value="Health & Human Needs">Health & Human Needs
+        <option value="Military & Veterans">Military & Veterans
+        <option value="Public Safety & Emergency Preparedness">Public Safety & Emergency Preparedness
+        <option value="Seniors">Seniors
+      </select>
+    </form>
+<p>Find worthy causes in need of volunteers like you</p>
+
+      </br>
+      <button type="button" class="btn btn-primary center-block" data-ui-sref="storyIndex" href="#">See All Stories</a></button>
+    </div>
+  </body>
+</html>

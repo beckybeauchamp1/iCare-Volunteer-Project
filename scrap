@@ -1,0 +1,166 @@
+<!DOCTYPE html >
+<html>
+<head></head>
+  <title></title>
+  <style>
+  body {
+    background-image: url(//i.imgur.com/ENvDzQX.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    text-align: center;
+  }
+  .intro-section {
+    padding-top: 60px;
+  }
+  h1 {
+    color: white;
+    font-family: "Raleway", sans-serif;
+    font-size: 30pt;
+    font-weight: bold;
+    padding-top: 250px;
+  }
+  #home-p {
+    color: white;
+    font-family: "Quicksand", sans-serif;
+    font-size: 20px;
+  }
+  p {
+    font-family: "Quicksand", sans-serif;
+    color: white;
+    font-size: 25px;
+    /*padding-top: 20px;*/
+  }
+  .btn-block {
+    display: block;
+    width: 200px;
+  }
+  .btn-primary {
+    color: #fff;
+    border: 1px solid #fff;
+    background-color: transparent;
+  }
+  .btn-primary:active {
+    color: white;
+  }
+  .btn-primary:hover {
+    background-color: #099C38;
+  .btn {
+    text-align: center;
+    vertical-align: middle;
+    margin: 0px auto;
+    position: absolute;
+    justify-content: center;
+  }
+  </style>
+
+
+  <body>
+    <div class="intro-section">
+      <h1>WHAT DO YOU CARE ABOUT?</h1>
+      <p id="home-p">iCare about...</p>
+      <form>
+        <select data-ng-model="event.focus_area">
+          <option value="">
+            <option value="All">All
+              <option value="Advocacy & Human Rights">Advocacy & Human Rights
+                <option value="Animals">Animals
+                  <option value="Arts & Culture">Arts & Culture
+                    <option value="Children & Youth">Children & Youth
+                      <option value="Community Development">Community Development
+                        <option value="Economic Development">Economic Development
+                          <option value="Education & Literacy">Education & Literacy
+                            <option value="Environment & Sustainability">Environment & Sustainability
+                              <option value="Health & Human Needs">Health & Human Needs
+                                <option value="Military & Veterans">Military & Veterans
+                                  <option value="Public Safety & Emergency Preparedness">Public Safety & Emergency Preparedness
+                                    <option value="Seniors">Seniors
+                                    </select>
+                                  </form>
+
+                                  <div ng-switch="event.focus_area">
+                                    <div ng-switch-when="All">
+                                      <h1>All</h1>
+                                      <p>Welcome to a world of dogs.</p>
+                                    </div>
+                                    <div ng-switch-when="Advocacy & Human Rights">
+                                      <h1>"Advocacy & Human Rights"</h1>
+                                      <p>Learn from examples.</p>
+                                    </div>
+                                    <div ng-switch-when="cars">
+                                      <h1>Cars</h1>
+                                      <p>Read about cars.</p>
+                                    </div>
+                                  </div>
+
+                                  <p>Find worthy causes in need of volunteers like you</p>
+
+                                  <!-- <div class="well" data-event-form data-event="EventShowVM" data-form-method="edit"></div> -->
+                                  <button type="button" class="btn btn-primary center-block" data-ui-sref="eventShow">See All Events</a></button>
+                                </div>
+                              </br>
+                              <!-- <button type="button" class="btn btn-primary btn-block" data-ui-sref="storyIndex" href="#">See All Stories</a></button> -->
+                            </div>
+                          </body>
+                          </html>
+
+<div class="container" data-ng-app="icare">
+  <header class="jumbotron">
+    <h1>Stories</h1>
+  </header>
+  <input type="text" placeholder="search for stories" data-ng-model="search">
+  <main data-ng-controller="index_controller as vm">
+    <div data-ng-repeat="story in vm.stories | filter:search">
+      <h1>{{story.name}}</h1>
+      <p>{{story.name}}<p>
+      <p>{{story.age}}</p>
+      <p>{{story.cause}}<p>
+      <img data-ng-src="{{story.photo_url}}" alt="#" />
+      <p>{{story.description}}</p>
+    </div>
+  </main>
+  <footer class="foot">
+    <a data-ui-sref="vm.create()">Tell Us What Inspires You!</a>
+  </footer>
+</div>
+
+
+
+
+<div class="row well" data-ng-repeat="story in IndexVM.stories">
+  <div class="col-md-6">
+    <h3><a href="#" data-ui-sref="show({id: story.id})">{{story.name}}</a></h3>
+    <p>{{story.volstory}}</p>
+  </div>
+  <div class="col-md-6">
+    <img class="img-responsive img-rounded" data-ng-src="{{story.photo_url}}" />
+  </div>
+</div>
+<div class="row well">
+    <div class = "col-md-6">
+      <div data-story-form data-story="IndexVM.newStory"></div>
+    </div>
+  </div>
+
+
+
+  <div data-story-form data-story="this.newStory"></div>
+
+
+<h2>{{showVM.story.name}}</h2>
+<p>{{showVM.story.volstory}}</p>
+<img class="img-responsive img-rounded" data-ng-src="{{showVM.story.photo_url}}" alt="Story" />
+
+
+<form>
+<input placeholder="Title" data-ng-model="grumble.title" />
+<input placeholder="Author name" data-ng-model="grumble.authorName" />
+<input placeholder="Photo URL" data-ng-model="grumble.photoUrl" />
+<textarea placeholder="Grumble content" data-ng-model="grumble.content"></textarea>
+<button type="button" data-ng-if="!grumble.id" data-ng-click="create()">Create</button>
+<div data-ng-if="grumble.id">
+  <button type="button" data-ng-click="update()">Update</button>
+  <button type="button" data-ng-click="delete()">Delete</button>
+</div>
+</form>

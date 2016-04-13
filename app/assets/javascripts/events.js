@@ -9,49 +9,87 @@
     "ui.router",
     "ngResource"
   ])
-  .factory("EventFactory", [
-    "$resource",
-    EventFactoryFunction
-  ])
   .config([
     "$stateProvider",
     RouterFunction
   ])
-  .controller("index_controller", [
-    "EventFactory",
-    IndexControllerFunction
+  .factory("EventFactory", [
+    "$resource",
+    EventFactoryFunction
   ])
-  .controller("show_controller", [
+  .factory("StoryFactory", [
+    "$resource",
+    StoryFactoryFunction
+  ])
+  .directive("storyForm", [
+    "StoryFactory",
+    "$state",
+    StoryFormDirectiveFunction
+  ])
+  .controller("event_index_controller", [
+    "EventFactory",
+    EventIndexControllerFunction
+  ])
+  .controller("event_show_controller", [
     "EventFactory",
     "$stateParams",
-    ShowControllerFunction
+    EventShowControllerFunction
   ])
-  .directive("eventForm", [
-    "EventFactory",
-    "$state",
-    EventFormDirectiveFunction
+  .controller("story_index_controller", [
+    "StoryFactory",
+    StoryIndexControllerFunction
+  ])
+  .controller("story_form_controller", [
+    StoryFormControllerFunction
+  ])
+
+  .controller("story_show_controller", [
+    "StoryFactory",
+    "$stateParams",
+    StoryShowControllerFunction
   ]);
 
   function RouterFunction($stateProvider){
     $stateProvider
-    .state("index", {
-      url: "/",
+    .state("eventIndex", {
+      url: "",
       templateUrl: "ng-view/event.index.html",
-      controller: "index_controller",
-      controllerAs: "IndexVM"
+      controller: "event_index_controller",
+      controllerAs: "EventIndexVM"
     })
-    .state("show",{
-      url: "/:id",
+    .state("eventShow",{
+      url: "/events",
       templateUrl: "ng-view/event.show.html",
-      controller: "show_controller",
-      controllerAs: "ShowVM"
+      controller: "event_show_controller",
+      controllerAs: "EventShowVM"
+    })
+    .state("storyIndex", {
+      url: "/stories",
+      templateUrl: "ng-view/story.index.html",
+      controller: "story_index_controller",
+      controllerAs: "StoryIndexVM"
+    })
+    .state("storyForm", {
+      url: "/stories/new",
+      templateUrl: "ng-view/story.form.html",
+      controller: "story_form_controller",
+      controllerAs: "StoryFormVM"
+    })
+    // Since you don't have a "show view" for stories, i would take this out
+    .state("storyShow", {
+      url: "/stories/:id",
+      templateUrl: "ng-view/story.show.html",
+      controller: "story_show_controller",
+      controllerAs: "StoryShowVM"
     });
+
   }
 
   function EventFactoryFunction($resource){
     var vm = this;
-    var event = $resource("/events/:id.json", {}, {
-      update: {method: "PUT"}
+    var event =
+     $resource("/events/:id.json", {}, {
+      UPDATE: {method: "PUT"}
     });
     vm.data = event.query();
     vm.sort_data_by = function(title){
@@ -60,43 +98,54 @@
     }
     return event;
   }
+  function EventIndexControllerFunction(EventFactory){
+    var EventIndexVM = this;
+    this.events = EventFactory.query();
+    this.newEvent = new EventFactory();
+  }
+  function EventShowControllerFunction(EventFactory, $stateParams){
+    var EventShowVM = this;
+    EventShowVM.event = EventFactory.get[{id: $stateParams.id}]
+  };
 
-  function IndexControllerFunction(EventFactory, $stateParams){
-    var indexVM = this;
-    indexVM.events = EventFactory.query();
-    indexVM.newEvent = new EventFactory();
+  function StoryFactoryFunction($resource){
+    return $resource("/stories/:id.json", {}, {
+      update: {method: "PUT"}
+    });
+    vm.data = story.query();
+    vm.sort_data_by = function(name){
+      vm.sort_on = name;
+      vm.is_descending =!(vm.is_descending);
+    }
+  return story;
   }
 
-  function ShowControllerFunction(EventFactory, $stateParams){
-    var showVM = this;
-    showVM.event = EventFactory.get({id: $stateParams.id})
-    // eventFactory.all.$promise.then(function(){
-    //   eventFactory.all.forEach(function(event){
-    //     if(event.id == $stateParams.id){
-    //       showVM.event = event;
+  function StoryIndexControllerFunction(StoryFactory){
+    var StoryIndexVM = this;
+    this.stories = StoryFactory.query();
+    this.newStory = new StoryFactory();
+  }
+  // I would delete this since your not using
+  function StoryFormControllerFunction(){
+
   }
 
-  function EventFormDirectiveFunction(EventFactory, $state){
+  function StoryShowControllerFunction(StoryFactory, $stateParams){
+    // Since you don't have a show view, I would take this code out, it's not really doing anything.
+    var StoryShowVM = this;
+    StoryShowVM.story = StoryFactory.get({id:$stateParams.id})
+  }
+
+  function StoryFormDirectiveFunction(StoryFactory, $state){
     return{
-      templateUrl: "ng-view/event.form.html",
+      templateUrl: "ng-view/_story.form.html",
       scope: {
-        event:  "=",
-        formMethod:   "@"
+        formMethod: "@"
       },
       link: function(scope){
         scope.create = function(){
-          scope.event.save(scope.event, function(response){
-            event.all.push(response);
-          });
-        }
-        scope.update = function(){
-          event.update({id: scope.events.id}, scope.events, function(response){
-            console.log("Successful");
-          });
-        }
-        scope.delete = function(){
-          scope.event.$delete({id: scope.event.id}, function(){
-            $state.go("eventIndex", {}, {reload: true});
+          StoryFactory.save(scope.story, function(response){
+            // If you look at your server logs, this is actually posting, you just don't need to push into anything. StoryFactory is a function not an array
           });
         }
       }

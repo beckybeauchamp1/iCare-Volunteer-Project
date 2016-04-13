@@ -1,13 +1,112 @@
-<body id="home-body">
-  <div id="home-content-box">
-    <h1 id="home-header">WHAT DO YOU CARE ABOUT?</h1>
-    <p id="home-p">This is where the search for a cause bar will go</p>
+<!DOCTYPE html>
+<head>
+</head>
+
+<style>
+
+nav {
+  color: #0DFF4D;
+}
+
+.container {
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.dc-image-container {
+  background-image: url(//i.imgur.com/oivONQO.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 250px;
+}
+
+h1 {
+  color: white;
+  font-family: "Raleway", sans-serif;
+  font-size: 50px;
+  font-weight: normal;
+  text-align: center;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: relative;
+  padding-top: 70px;
+}
+
+h2 {
+  color: white;
+  font-family: "Quicksand", sans-serif;
+  font-size: 30px;
+  font-weight: normal;
+  text-align: center;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: relative;
+}
+
+/*tbody tr:nth-of-type(odd) {
+  background-color: #f6dce1;
+}*/
+
+th {
+  color: #099C38;
+}
+
+table {
+  border-color: black;
+}
+
+</style>
+
+<body>
+  <div class="dc-image-container">
+    <h1>You Care About Your City</h1>
+    <h2>Search for causes in need of volunteers like you</h2>
   </div>
+
+<main data-ng-controller="event_index_controller as vm">
+
+
+<table class="table">
+<table class="table table-bordered">
+
+  <thead>
+    <tr>
+      <input type="text" class="form-control" placeholder="Search Events" data-ng-model="vm.filter_on" />
+      <td data-ng-click="vm.is_descending = !(vm.is_descending)">
+        <span data-ng-if="vm.is_descending">a-z</span>
+        <span data-ng-if="vm.is_descending">z-a</span>
+      </td>
+      <th data-ng-click="vm.sort_data_by('event.title')">Event Name</th>
+      <th data-ng-click="vm.sort_data_by('event.organizer')">Organizer</th>
+      <th data-ng-click="vm.sort_data_by('event.focus_area')">Category</th>
+      <th data-ng-click="vm.sort_data_by('event.start_date')">Start Date</th>
+      <th data-ng-click="vm.sort_data_by('event.end_date')">End Date</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <!--Nice job here! using data ng repeat and a filter! -->
+    <tr data-ng-repeat="event in vm.events | filter: vm.filter_on | orderBy: vm.sort_on : vm.is_descending">
+      <td></td>
+        <td>{{event.title}}</td>
+        <td>{{event.organizer}}</td>
+        <td>{{event.focus_area}}</td>
+        <td>{{event.start_date}}</td>
+        <td>{{event.end_date}}</td>
+      </td>
+    </tr>
+  </tbody>
+  </table>
+</main>
+</table>
 </body>
-
-
-<h2>{{showVM.destination.name}}</h2>
-<p>{{showVM.destination.description}}</p>
-<img class="img-responsive img-rounded" data-ng-src="{{showVM.destination.image_url}}" alt="Destination" />
-
-<div class="well" data-event-form data-event="showVM.event" data-form-method="edit"></div>
+</html>

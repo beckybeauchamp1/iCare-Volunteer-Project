@@ -1,0 +1,13 @@
+I know you all had pretty extensive planning, so just make sure to either take pics or just add a little more to your specific projects.
+Employers just like to see it :)
+
+
+     Location: DC
+        |
+      / | \
+      Organizations
+        |
+      / | \
+      Events <--- OUR Database
+
+      Events has many locations
